@@ -1,0 +1,46 @@
+{
+  "vertical": "hotel8",
+  "services": [],
+  "apps": [
+    {
+      "slug": "epos",
+      "web_dir": "build/web",
+      "listing": {
+        "app_name": "Hotel8:ePOS",
+        "app_slug": "hotel8-epos",
+        "description": "Point of Sale app — restaurant, bar, and retail orders, table management, payments, and end-of-day reconciliation.",
+        "backend_url": "",
+        "supports_dcr": true,
+        "visibility": "public",
+        "status": "published",
+        "auth_mode": "staff",
+        "oauth_defaults": {
+          "grant_types": [
+            "authorization_code",
+            "refresh_token"
+          ],
+          "response_types": [
+            "code"
+          ],
+          "token_endpoint_auth_method": "none",
+          "scopes": [
+            "openid",
+            "profile",
+            "email",
+            "hotel8:pos:orders:read",
+            "hotel8:pos:orders:write",
+            "hotel8:pos:menus:read",
+            "hotel8:pos:menus:write",
+            "hotel8:pos:payments:read",
+            "hotel8:pos:payments:write",
+            "hotel8:pms:folio:read",
+            "hotel8:pms:folio:write",
+            "loyalty:profile:read",
+            "loyalty:profile:write"
+          ],
+          "consent_required": false
+        }
+      }
+    }
+  ]
+}

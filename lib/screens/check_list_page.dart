@@ -132,12 +132,13 @@ class _CheckListPageState extends State<CheckListPage> {
                     itemCount: checks.length,
                     itemBuilder: (context, i) {
                       final c = checks[i];
-                      final statusColor = <String, Color>{
-                        'open': Colors.green,
-                        'closed': Colors.grey,
-                        'voided': Colors.red,
-                        'transferred': Colors.blue,
-                      }[c.status] ??
+                      final statusColor =
+                          <String, Color>{
+                            'open': Colors.green,
+                            'closed': Colors.grey,
+                            'voided': Colors.red,
+                            'transferred': Colors.blue,
+                          }[c.status] ??
                           Colors.grey;
                       return Card(
                         margin: const EdgeInsets.symmetric(vertical: 4),
@@ -145,7 +146,8 @@ class _CheckListPageState extends State<CheckListPage> {
                           leading: CircleAvatar(
                             backgroundColor: statusColor.withOpacity(0.2),
                             child: Text(
-                                c.tableName ?? c.checkNumber.substring(0, 2)),
+                              c.tableName ?? c.checkNumber.substring(0, 2),
+                            ),
                           ),
                           title: Text('Check #${c.checkNumber}'),
                           subtitle: Text(
@@ -155,11 +157,17 @@ class _CheckListPageState extends State<CheckListPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(fmt.format(c.total),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 16)),
-                              Text('${c.items.length} items',
-                                  style: Theme.of(context).textTheme.bodySmall),
+                              Text(
+                                fmt.format(c.total),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                '${c.items.length} items',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
                             ],
                           ),
                           onTap: () => Navigator.of(context).push(

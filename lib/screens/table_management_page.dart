@@ -69,10 +69,13 @@ class _TableManagementPageState extends State<TableManagementPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: Text('Table ${table.tableNumber}',
-                  style: Theme.of(context).textTheme.titleMedium),
+              title: Text(
+                'Table ${table.tableNumber}',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               subtitle: Text(
-                  '${table.section} • ${table.seats} seats • ${table.status}'),
+                '${table.section} • ${table.seats} seats • ${table.status}',
+              ),
             ),
             const Divider(),
             if (table.status == 'available')
@@ -119,13 +122,17 @@ class _TableManagementPageState extends State<TableManagementPage> {
         await _updateStatus(table, 'available');
       case 'order':
         if (mounted) {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (_) => OrderEntryPage(
-              client: widget.client,
-              outletId: widget.outletId,
-              checkId: table.currentCheckId,
-            ),
-          )).then((_) => _refresh());
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (_) => OrderEntryPage(
+                    client: widget.client,
+                    outletId: widget.outletId,
+                    checkId: table.currentCheckId,
+                  ),
+                ),
+              )
+              .then((_) => _refresh());
         }
     }
   }
@@ -146,7 +153,10 @@ class _TableManagementPageState extends State<TableManagementPage> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancel'),
+            ),
             FilledButton(
               onPressed: () =>
                   Navigator.pop(ctx, int.tryParse(ctrl.text.trim()) ?? 2),
@@ -188,10 +198,15 @@ class _TableManagementPageState extends State<TableManagementPage> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancel'),
+            ),
             FilledButton(
               onPressed: () => Navigator.pop(
-                  ctx, ctrl.text.trim().isEmpty ? null : ctrl.text.trim()),
+                ctx,
+                ctrl.text.trim().isEmpty ? null : ctrl.text.trim(),
+              ),
               child: const Text('Assign'),
             ),
           ],
@@ -272,7 +287,10 @@ class _TableManagementPageState extends State<TableManagementPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Legend', style: Theme.of(context).textTheme.titleSmall),
+                        Text(
+                          'Legend',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
                         const SizedBox(height: 8),
                         _Legend('Available', Colors.green.shade300),
                         _Legend('Occupied', Colors.red.shade300),
@@ -299,20 +317,24 @@ class _TableManagementPageState extends State<TableManagementPage> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(section,
-                            style: Theme.of(context).textTheme.titleMedium),
+                        Text(
+                          section,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                         const SizedBox(height: 8),
                         GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount:
-                                MediaQuery.of(context).size.width > 900 ? 6 : 4,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                            childAspectRatio: 1.2,
-                          ),
+                                crossAxisCount:
+                                    MediaQuery.of(context).size.width > 900
+                                    ? 6
+                                    : 4,
+                                crossAxisSpacing: 8,
+                                mainAxisSpacing: 8,
+                                childAspectRatio: 1.2,
+                              ),
                           itemCount: sectionTables.length,
                           itemBuilder: (context, j) {
                             final t = sectionTables[j];
@@ -323,23 +345,33 @@ class _TableManagementPageState extends State<TableManagementPage> {
                                   color: _tableColor(t.status),
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
-                                      color: Colors.black.withOpacity(0.1)),
+                                    color: Colors.black.withOpacity(0.1),
+                                  ),
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(t.tableNumber,
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold)),
-                                    Text('${t.seats} seats',
-                                        style: const TextStyle(fontSize: 11)),
+                                    Text(
+                                      t.tableNumber,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${t.seats} seats',
+                                      style: const TextStyle(fontSize: 11),
+                                    ),
                                     if (t.assignedServer != null)
-                                      Text(t.assignedServer!,
-                                          style: const TextStyle(fontSize: 10)),
+                                      Text(
+                                        t.assignedServer!,
+                                        style: const TextStyle(fontSize: 10),
+                                      ),
                                     if (t.seatedAt != null)
-                                      Text(timeFmt.format(t.seatedAt!),
-                                          style: const TextStyle(fontSize: 10)),
+                                      Text(
+                                        timeFmt.format(t.seatedAt!),
+                                        style: const TextStyle(fontSize: 10),
+                                      ),
                                   ],
                                 ),
                               ),

@@ -60,8 +60,9 @@ class _PaymentPageState extends State<PaymentPage> {
 
   Future<void> _processPayment() async {
     if (_amount <= 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Enter a payment amount.')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Enter a payment amount.')));
       return;
     }
     setState(() => _loading = true);
@@ -74,8 +75,8 @@ class _PaymentPageState extends State<PaymentPage> {
         reference: _method == 'card'
             ? (_refCtrl.text.trim().isEmpty ? null : _refCtrl.text.trim())
             : _method == 'room-charge'
-                ? (_roomCtrl.text.trim().isEmpty ? null : _roomCtrl.text.trim())
-                : null,
+            ? (_roomCtrl.text.trim().isEmpty ? null : _roomCtrl.text.trim())
+            : null,
         tip: _tip > 0 ? _tip : null,
       );
       OfflineQueue.instance.noteSuccess();
@@ -87,13 +88,19 @@ class _PaymentPageState extends State<PaymentPage> {
         );
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Payment processed. Check closed.')));
+            const SnackBar(content: Text('Payment processed. Check closed.')),
+          );
           Navigator.of(context).pop(true);
         }
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Payment processed. Remaining: \$${_remaining.toStringAsFixed(2)}')));
+            SnackBar(
+              content: Text(
+                'Payment processed. Remaining: \$${_remaining.toStringAsFixed(2)}',
+              ),
+            ),
+          );
         }
         setState(() {
           _amount = _remaining;
@@ -104,21 +111,27 @@ class _PaymentPageState extends State<PaymentPage> {
       // Network-class failure while disconnected — capture the deferred
       // settlement for replay (epos/DESIGN.md §2 offline mode).
       if (e is BffException && (e.statusCode == 0 || e.statusCode >= 500)) {
-        OfflineQueue.instance.noteFailure(OfflineOp(
-          type: OfflineOpType.paymentPost,
-          checkId: widget.check.id,
-          idempotencyKey: OfflineQueue.instance.nextIdempotencyKey(),
-          payload: {
-            'amount': _amount,
-            'method': _method,
-            'tip': _tip > 0 ? _tip : null,
-          },
-          capturedAt: DateTime.now(),
-        ));
+        OfflineQueue.instance.noteFailure(
+          OfflineOp(
+            type: OfflineOpType.paymentPost,
+            checkId: widget.check.id,
+            idempotencyKey: OfflineQueue.instance.nextIdempotencyKey(),
+            payload: {
+              'amount': _amount,
+              'method': _method,
+              'tip': _tip > 0 ? _tip : null,
+            },
+            capturedAt: DateTime.now(),
+          ),
+        );
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
               content: Text(
-                  'Offline — payment queued (${OfflineQueue.instance.queuedCount} in queue).')));
+                'Offline — payment queued (${OfflineQueue.instance.queuedCount} in queue).',
+              ),
+            ),
+          );
           Navigator.of(context).pop(false);
         }
         return;
@@ -155,15 +168,26 @@ class _PaymentPageState extends State<PaymentPage> {
                           padding: const EdgeInsets.all(16),
                           child: Column(
                             children: [
-                              Text('Check #${widget.check.checkNumber}',
-                                  style: theme.textTheme.titleLarge),
-                              Text('${widget.check.tableName ?? 'No table'} • ${widget.check.serverName}'),
+                              Text(
+                                'Check #${widget.check.checkNumber}',
+                                style: theme.textTheme.titleLarge,
+                              ),
+                              Text(
+                                '${widget.check.tableName ?? 'No table'} • ${widget.check.serverName}',
+                              ),
                               const Divider(),
-                              _Row('Subtotal', fmt.format(widget.check.subtotal)),
+                              _Row(
+                                'Subtotal',
+                                fmt.format(widget.check.subtotal),
+                              ),
                               _Row('Tax', fmt.format(widget.check.tax)),
                               if (_tip > 0) _Row('Tip', fmt.format(_tip)),
                               const Divider(),
-                              _Row('Total', fmt.format(_totalWithTip), bold: true),
+                              _Row(
+                                'Total',
+                                fmt.format(_totalWithTip),
+                                bold: true,
+                              ),
                             ],
                           ),
                         ),
@@ -184,7 +208,9 @@ class _PaymentPageState extends State<PaymentPage> {
                                     _tip = tipAmt;
                                     _amount = _totalWithTip;
                                   }),
-                                  child: Text('${(p * 100).round()}%\n\$${tipAmt.toStringAsFixed(2)}'),
+                                  child: Text(
+                                    '${(p * 100).round()}%\n\$${tipAmt.toStringAsFixed(2)}',
+                                  ),
                                 ),
                               ),
                             );
@@ -202,7 +228,10 @@ class _PaymentPageState extends State<PaymentPage> {
                       ),
                       const SizedBox(height: 16),
                       // ── Payment method ──
-                      Text('Payment Method', style: theme.textTheme.titleMedium),
+                      Text(
+                        'Payment Method',
+                        style: theme.textTheme.titleMedium,
+                      ),
                       const SizedBox(height: 8),
                       Row(
                         children: [
@@ -227,7 +256,8 @@ class _PaymentPageState extends State<PaymentPage> {
                               icon: Icons.hotel,
                               label: 'Room',
                               selected: _method == 'room-charge',
-                              onTap: () => setState(() => _method = 'room-charge'),
+                              onTap: () =>
+                                  setState(() => _method = 'room-charge'),
                             ),
                           ),
                         ],
@@ -253,15 +283,19 @@ class _PaymentPageState extends State<PaymentPage> {
                       const SizedBox(height: 16),
                       // ── Amount ──
                       TextField(
-                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         decoration: InputDecoration(
                           labelText: 'Amount',
                           prefixText: '\$',
                           border: const OutlineInputBorder(),
-                          suffixText: 'Remaining: \$${_remaining.toStringAsFixed(2)}',
+                          suffixText:
+                              'Remaining: \$${_remaining.toStringAsFixed(2)}',
                         ),
-                        controller:
-                            TextEditingController(text: _amount.toStringAsFixed(2)),
+                        controller: TextEditingController(
+                          text: _amount.toStringAsFixed(2),
+                        ),
                         onChanged: (v) => _amount = double.tryParse(v) ?? 0,
                       ),
                       const SizedBox(height: 16),
@@ -302,12 +336,19 @@ class _Row extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: bold ? Theme.of(context).textTheme.titleMedium : null),
-          Text(value,
-              style: bold
-                  ? Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)
-                  : null),
+          Text(
+            label,
+            style: bold ? Theme.of(context).textTheme.titleMedium : null,
+          ),
+          Text(
+            value,
+            style: bold
+                ? Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  )
+                : null,
+          ),
         ],
       ),
     );
@@ -337,7 +378,9 @@ class _MethodButton extends StatelessWidget {
         child: FilledButton.tonal(
           onPressed: onTap,
           style: FilledButton.styleFrom(
-            backgroundColor: selected ? theme.colorScheme.primaryContainer : null,
+            backgroundColor: selected
+                ? theme.colorScheme.primaryContainer
+                : null,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

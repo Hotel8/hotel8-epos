@@ -107,8 +107,7 @@ class _MenuManagementPageState extends State<MenuManagementPage> {
                     child: ListView(
                       padding: const EdgeInsets.all(8),
                       children: [
-                        Text('Categories',
-                            style: theme.textTheme.titleSmall),
+                        Text('Categories', style: theme.textTheme.titleSmall),
                         const SizedBox(height: 8),
                         ListTile(
                           selected: _selectedCategoryId == null,
@@ -122,8 +121,10 @@ class _MenuManagementPageState extends State<MenuManagementPage> {
                             selected: _selectedCategoryId == c.id,
                             title: Text(c.name),
                             subtitle: Text(
-                                '${_items.where((i) => i.categoryId == c.id).length} items'),
-                            onTap: () => setState(() => _selectedCategoryId = c.id),
+                              '${_items.where((i) => i.categoryId == c.id).length} items',
+                            ),
+                            onTap: () =>
+                                setState(() => _selectedCategoryId = c.id),
                             dense: true,
                           );
                         }),
@@ -168,11 +169,11 @@ class _MenuManagementPageState extends State<MenuManagementPage> {
                                 padding: const EdgeInsets.all(12),
                                 gridDelegate:
                                     const SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 250,
-                                  childAspectRatio: 1.5,
-                                  crossAxisSpacing: 8,
-                                  mainAxisSpacing: 8,
-                                ),
+                                      maxCrossAxisExtent: 250,
+                                      childAspectRatio: 1.5,
+                                      crossAxisSpacing: 8,
+                                      mainAxisSpacing: 8,
+                                    ),
                                 itemCount: _filteredItems.length,
                                 itemBuilder: (context, i) {
                                   final item = _filteredItems[i];
@@ -195,7 +196,8 @@ class _MenuManagementPageState extends State<MenuManagementPage> {
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     decoration: item.eightySixed
-                                                        ? TextDecoration.lineThrough
+                                                        ? TextDecoration
+                                                              .lineThrough
                                                         : TextDecoration.none,
                                                   ),
                                                 ),
@@ -203,9 +205,11 @@ class _MenuManagementPageState extends State<MenuManagementPage> {
                                               if (item.modifiers.isNotEmpty)
                                                 Chip(
                                                   label: Text(
-                                                      '${item.modifiers.length} mods',
-                                                      style:
-                                                          const TextStyle(fontSize: 10)),
+                                                    '${item.modifiers.length} mods',
+                                                    style: const TextStyle(
+                                                      fontSize: 10,
+                                                    ),
+                                                  ),
                                                   padding: EdgeInsets.zero,
                                                   visualDensity:
                                                       VisualDensity.compact,
@@ -213,10 +217,14 @@ class _MenuManagementPageState extends State<MenuManagementPage> {
                                             ],
                                           ),
                                           if (item.description != null)
-                                            Text(item.description!,
-                                                style: const TextStyle(fontSize: 12),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis),
+                                            Text(
+                                              item.description!,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           const Spacer(),
                                           Row(
                                             children: [
@@ -232,7 +240,8 @@ class _MenuManagementPageState extends State<MenuManagementPage> {
                                               ),
                                               const Spacer(),
                                               FilledButton.tonalIcon(
-                                                onPressed: () => _toggle86(item),
+                                                onPressed: () =>
+                                                    _toggle86(item),
                                                 icon: Icon(
                                                   item.eightySixed
                                                       ? Icons.check
@@ -243,7 +252,10 @@ class _MenuManagementPageState extends State<MenuManagementPage> {
                                                       : Colors.red,
                                                 ),
                                                 label: Text(
-                                                    item.eightySixed ? 'Un-86' : '86'),
+                                                  item.eightySixed
+                                                      ? 'Un-86'
+                                                      : '86',
+                                                ),
                                               ),
                                             ],
                                           ),

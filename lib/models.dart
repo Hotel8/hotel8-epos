@@ -34,14 +34,14 @@ class Outlet {
   });
 
   factory Outlet.fromJson(Map<String, dynamic> json) => Outlet(
-        id: json['id'] as String,
-        code: json['code'] as String,
-        name: json['name'] as String,
-        type: json['type'] as String,
-        description: json['description'] as String?,
-        active: json['active'] as bool? ?? true,
-        currencyCode: json['currency_code'] as String? ?? 'USD',
-      );
+    id: json['id'] as String,
+    code: json['code'] as String,
+    name: json['name'] as String,
+    type: json['type'] as String,
+    description: json['description'] as String?,
+    active: json['active'] as bool? ?? true,
+    currencyCode: json['currency_code'] as String? ?? 'USD',
+  );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -62,11 +62,11 @@ class MenuCategory {
   });
 
   factory MenuCategory.fromJson(Map<String, dynamic> json) => MenuCategory(
-        id: json['id'] as String,
-        name: json['name'] as String,
-        sortOrder: json['sort_order'] as int? ?? 0,
-        active: json['active'] as bool? ?? true,
-      );
+    id: json['id'] as String,
+    name: json['name'] as String,
+    sortOrder: json['sort_order'] as int? ?? 0,
+    active: json['active'] as bool? ?? true,
+  );
 }
 
 class MenuItem {
@@ -93,19 +93,20 @@ class MenuItem {
   });
 
   factory MenuItem.fromJson(Map<String, dynamic> json) => MenuItem(
-        id: json['id'] as String,
-        name: json['name'] as String,
-        categoryId: json['category_id'] as String,
-        description: json['description'] as String?,
-        price: (json['price'] as num?)?.toDouble() ?? 0,
-        currencyCode: json['currency_code'] as String? ?? 'USD',
-        active: json['active'] as bool? ?? true,
-        eightySixed: json['eighty_sixed'] as bool? ?? false,
-        modifiers: (json['modifiers'] as List<dynamic>?)
-                ?.map((e) => Modifier.fromJson(e as Map<String, dynamic>))
-                .toList() ??
-            const [],
-      );
+    id: json['id'] as String,
+    name: json['name'] as String,
+    categoryId: json['category_id'] as String,
+    description: json['description'] as String?,
+    price: (json['price'] as num?)?.toDouble() ?? 0,
+    currencyCode: json['currency_code'] as String? ?? 'USD',
+    active: json['active'] as bool? ?? true,
+    eightySixed: json['eighty_sixed'] as bool? ?? false,
+    modifiers:
+        (json['modifiers'] as List<dynamic>?)
+            ?.map((e) => Modifier.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        const [],
+  );
 }
 
 class Modifier {
@@ -122,11 +123,11 @@ class Modifier {
   });
 
   factory Modifier.fromJson(Map<String, dynamic> json) => Modifier(
-        id: json['id'] as String,
-        name: json['name'] as String,
-        priceAdjustment: (json['price_adjustment'] as num?)?.toDouble() ?? 0,
-        modifierGroup: json['modifier_group'] as String?,
-      );
+    id: json['id'] as String,
+    name: json['name'] as String,
+    priceAdjustment: (json['price_adjustment'] as num?)?.toDouble() ?? 0,
+    modifierGroup: json['modifier_group'] as String?,
+  );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -173,29 +174,30 @@ class Check {
   });
 
   factory Check.fromJson(Map<String, dynamic> json) => Check(
-        id: json['id'] as String,
-        checkNumber: json['check_number'] as String,
-        outletId: json['outlet_id'] as String,
-        tableId: json['table_id'] as String?,
-        tableName: json['table_name'] as String?,
-        serverId: json['server_id'] as String,
-        serverName: json['server_name'] as String,
-        guests: json['guests'] as int? ?? 1,
-        openedAt: DateTime.parse(json['opened_at'] as String),
-        closedAt: json['closed_at'] != null
-            ? DateTime.tryParse(json['closed_at'] as String)
-            : null,
-        status: json['status'] as String? ?? 'open',
-        items: (json['items'] as List<dynamic>?)
-                ?.map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
-                .toList() ??
-            const [],
-        subtotal: (json['subtotal'] as num?)?.toDouble() ?? 0,
-        tax: (json['tax'] as num?)?.toDouble() ?? 0,
-        total: (json['total'] as num?)?.toDouble() ?? 0,
-        tip: (json['tip'] as num?)?.toDouble(),
-        specialInstructions: json['special_instructions'] as String?,
-      );
+    id: json['id'] as String,
+    checkNumber: json['check_number'] as String,
+    outletId: json['outlet_id'] as String,
+    tableId: json['table_id'] as String?,
+    tableName: json['table_name'] as String?,
+    serverId: json['server_id'] as String,
+    serverName: json['server_name'] as String,
+    guests: json['guests'] as int? ?? 1,
+    openedAt: DateTime.parse(json['opened_at'] as String),
+    closedAt: json['closed_at'] != null
+        ? DateTime.tryParse(json['closed_at'] as String)
+        : null,
+    status: json['status'] as String? ?? 'open',
+    items:
+        (json['items'] as List<dynamic>?)
+            ?.map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        const [],
+    subtotal: (json['subtotal'] as num?)?.toDouble() ?? 0,
+    tax: (json['tax'] as num?)?.toDouble() ?? 0,
+    total: (json['total'] as num?)?.toDouble() ?? 0,
+    tip: (json['tip'] as num?)?.toDouble(),
+    specialInstructions: json['special_instructions'] as String?,
+  );
 }
 
 class OrderItem {
@@ -226,21 +228,22 @@ class OrderItem {
       quantity;
 
   factory OrderItem.fromJson(Map<String, dynamic> json) => OrderItem(
-        id: json['id'] as String,
-        menuItemId: json['menu_item_id'] as String,
-        name: json['name'] as String,
-        price: (json['price'] as num?)?.toDouble() ?? 0,
-        quantity: json['quantity'] as int? ?? 1,
-        modifiers: (json['modifiers'] as List<dynamic>?)
-                ?.map((e) => Modifier.fromJson(e as Map<String, dynamic>))
-                .toList() ??
-            const [],
-        specialInstructions: json['special_instructions'] as String?,
-        status: json['status'] as String? ?? 'sent',
-        sentAt: json['sent_at'] != null
-            ? DateTime.tryParse(json['sent_at'] as String)
-            : null,
-      );
+    id: json['id'] as String,
+    menuItemId: json['menu_item_id'] as String,
+    name: json['name'] as String,
+    price: (json['price'] as num?)?.toDouble() ?? 0,
+    quantity: json['quantity'] as int? ?? 1,
+    modifiers:
+        (json['modifiers'] as List<dynamic>?)
+            ?.map((e) => Modifier.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        const [],
+    specialInstructions: json['special_instructions'] as String?,
+    status: json['status'] as String? ?? 'sent',
+    sentAt: json['sent_at'] != null
+        ? DateTime.tryParse(json['sent_at'] as String)
+        : null,
+  );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -267,14 +270,14 @@ class Payment {
   });
 
   factory Payment.fromJson(Map<String, dynamic> json) => Payment(
-        id: json['id'] as String,
-        checkId: json['check_id'] as String,
-        amount: (json['amount'] as num?)?.toDouble() ?? 0,
-        method: json['method'] as String,
-        reference: json['reference'] as String?,
-        paidAt: DateTime.parse(json['paid_at'] as String),
-        serverId: json['server_id'] as String?,
-      );
+    id: json['id'] as String,
+    checkId: json['check_id'] as String,
+    amount: (json['amount'] as num?)?.toDouble() ?? 0,
+    method: json['method'] as String,
+    reference: json['reference'] as String?,
+    paidAt: DateTime.parse(json['paid_at'] as String),
+    serverId: json['server_id'] as String?,
+  );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -303,17 +306,17 @@ class Table {
   });
 
   factory Table.fromJson(Map<String, dynamic> json) => Table(
-        id: json['id'] as String,
-        tableNumber: json['table_number'] as String,
-        section: json['section'] as String,
-        seats: json['seats'] as int? ?? 4,
-        status: json['status'] as String? ?? 'available',
-        currentCheckId: json['current_check_id'] as String?,
-        assignedServer: json['assigned_server'] as String?,
-        seatedAt: json['seated_at'] != null
-            ? DateTime.tryParse(json['seated_at'] as String)
-            : null,
-      );
+    id: json['id'] as String,
+    tableNumber: json['table_number'] as String,
+    section: json['section'] as String,
+    seats: json['seats'] as int? ?? 4,
+    status: json['status'] as String? ?? 'available',
+    currentCheckId: json['current_check_id'] as String?,
+    assignedServer: json['assigned_server'] as String?,
+    seatedAt: json['seated_at'] != null
+        ? DateTime.tryParse(json['seated_at'] as String)
+        : null,
+  );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -346,19 +349,19 @@ class ServerShift {
   });
 
   factory ServerShift.fromJson(Map<String, dynamic> json) => ServerShift(
-        id: json['id'] as String,
-        serverId: json['server_id'] as String,
-        serverName: json['server_name'] as String,
-        startTime: DateTime.parse(json['start_time'] as String),
-        endTime: json['end_time'] != null
-            ? DateTime.tryParse(json['end_time'] as String)
-            : null,
-        status: json['status'] as String? ?? 'active',
-        cashStart: (json['cash_start'] as num?)?.toDouble() ?? 0,
-        cashEnd: (json['cash_end'] as num?)?.toDouble(),
-        openChecks: json['open_checks'] as int? ?? 0,
-        totalSales: (json['total_sales'] as num?)?.toDouble() ?? 0,
-      );
+    id: json['id'] as String,
+    serverId: json['server_id'] as String,
+    serverName: json['server_name'] as String,
+    startTime: DateTime.parse(json['start_time'] as String),
+    endTime: json['end_time'] != null
+        ? DateTime.tryParse(json['end_time'] as String)
+        : null,
+    status: json['status'] as String? ?? 'active',
+    cashStart: (json['cash_start'] as num?)?.toDouble() ?? 0,
+    cashEnd: (json['cash_end'] as num?)?.toDouble(),
+    openChecks: json['open_checks'] as int? ?? 0,
+    totalSales: (json['total_sales'] as num?)?.toDouble() ?? 0,
+  );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -385,21 +388,22 @@ class ReportData {
   });
 
   factory ReportData.fromJson(Map<String, dynamic> json) => ReportData(
-        reportType: json['report_type'] as String,
-        periodStart: DateTime.parse(json['period_start'] as String),
-        periodEnd: DateTime.parse(json['period_end'] as String),
-        currencyCode: json['currency_code'] as String? ?? 'USD',
-        columns: (json['columns'] as List<dynamic>?)
-                ?.map((e) => e as String)
-                .toList() ??
-            const [],
-        rows: (json['rows'] as List<dynamic>?)
-                ?.map((e) => e as Map<String, dynamic>)
-                .toList() ??
-            const [],
-        totals: (json['totals'] as Map<String, dynamic>?)?.map(
-              (k, v) => MapEntry(k, (v as num).toDouble()),
-            ) ??
-            const {},
-      );
+    reportType: json['report_type'] as String,
+    periodStart: DateTime.parse(json['period_start'] as String),
+    periodEnd: DateTime.parse(json['period_end'] as String),
+    currencyCode: json['currency_code'] as String? ?? 'USD',
+    columns:
+        (json['columns'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+        const [],
+    rows:
+        (json['rows'] as List<dynamic>?)
+            ?.map((e) => e as Map<String, dynamic>)
+            .toList() ??
+        const [],
+    totals:
+        (json['totals'] as Map<String, dynamic>?)?.map(
+          (k, v) => MapEntry(k, (v as num).toDouble()),
+        ) ??
+        const {},
+  );
 }

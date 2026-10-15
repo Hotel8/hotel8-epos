@@ -68,9 +68,15 @@ class _CheckDetailPageState extends State<CheckDetailPage> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancel'),
+            ),
             FilledButton(
-              onPressed: () => Navigator.pop(ctx, ctrl.text.trim().isEmpty ? 'N/A' : ctrl.text.trim()),
+              onPressed: () => Navigator.pop(
+                ctx,
+                ctrl.text.trim().isEmpty ? 'N/A' : ctrl.text.trim(),
+              ),
               child: const Text('Void'),
             ),
           ],
@@ -99,10 +105,18 @@ class _CheckDetailPageState extends State<CheckDetailPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Void Entire Check'),
-        content: const Text('This will void all items on this check. Continue?'),
+        content: const Text(
+          'This will void all items on this check. Continue?',
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Void Check')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Void Check'),
+          ),
         ],
       ),
     );
@@ -138,9 +152,13 @@ class _CheckDetailPageState extends State<CheckDetailPage> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancel'),
+            ),
             FilledButton(
-              onPressed: () => Navigator.pop(ctx, int.tryParse(ctrl.text.trim()) ?? 2),
+              onPressed: () =>
+                  Navigator.pop(ctx, int.tryParse(ctrl.text.trim()) ?? 2),
               child: const Text('Split'),
             ),
           ],
@@ -179,9 +197,15 @@ class _CheckDetailPageState extends State<CheckDetailPage> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancel'),
+            ),
             FilledButton(
-              onPressed: () => Navigator.pop(ctx, ctrl.text.trim().isEmpty ? null : ctrl.text.trim()),
+              onPressed: () => Navigator.pop(
+                ctx,
+                ctrl.text.trim().isEmpty ? null : ctrl.text.trim(),
+              ),
               child: const Text('Transfer'),
             ),
           ],
@@ -242,9 +266,13 @@ class _CheckDetailPageState extends State<CheckDetailPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Check #${check.checkNumber}',
-                            style: theme.textTheme.titleLarge),
-                        Text('${check.tableName ?? 'No table'} • ${check.serverName} • ${check.guests} guests'),
+                        Text(
+                          'Check #${check.checkNumber}',
+                          style: theme.textTheme.titleLarge,
+                        ),
+                        Text(
+                          '${check.tableName ?? 'No table'} • ${check.serverName} • ${check.guests} guests',
+                        ),
                         Text('Opened: ${timeFmt.format(check.openedAt)}'),
                       ],
                     ),
@@ -281,29 +309,48 @@ class _CheckDetailPageState extends State<CheckDetailPage> {
                                 children: [
                                   if (item.modifiers.isNotEmpty)
                                     Text(
-                                      item.modifiers.map((m) => m.name).join(', '),
-                                      style: TextStyle(fontSize: 12, color: theme.colorScheme.onSurfaceVariant),
+                                      item.modifiers
+                                          .map((m) => m.name)
+                                          .join(', '),
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color:
+                                            theme.colorScheme.onSurfaceVariant,
+                                      ),
                                     ),
                                   if (item.specialInstructions != null)
                                     Text(
                                       'Note: ${item.specialInstructions}',
-                                      style: TextStyle(fontSize: 12, color: theme.colorScheme.primary),
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: theme.colorScheme.primary,
+                                      ),
                                     ),
                                   Text(
                                     item.status,
-                                    style: TextStyle(fontSize: 11, color: theme.colorScheme.onSurfaceVariant),
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ],
                               ),
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text(fmt.format(item.lineTotal),
-                                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                                  Text(
+                                    fmt.format(item.lineTotal),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                   if (check.status == 'open') ...[
                                     const SizedBox(width: 8),
                                     IconButton(
-                                      icon: const Icon(Icons.remove_circle_outline, color: Colors.red),
+                                      icon: const Icon(
+                                        Icons.remove_circle_outline,
+                                        color: Colors.red,
+                                      ),
                                       onPressed: () => _voidItem(item),
                                       tooltip: 'Void item',
                                     ),
@@ -352,9 +399,13 @@ class _CheckDetailPageState extends State<CheckDetailPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('Total', style: theme.textTheme.titleLarge),
-                          Text(fmt.format(check.total),
-                              style: theme.textTheme.titleLarge
-                                  ?.copyWith(fontWeight: FontWeight.bold, color: theme.colorScheme.primary)),
+                          Text(
+                            fmt.format(check.total),
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: theme.colorScheme.primary,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 12),
@@ -365,24 +416,32 @@ class _CheckDetailPageState extends State<CheckDetailPage> {
                           runSpacing: 8,
                           children: [
                             FilledButton.icon(
-                              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => OrderEntryPage(
-                                  client: widget.client,
-                                  outletId: widget.outletId,
-                                  checkId: check.id,
-                                ),
-                              )).then((_) => _refresh()),
+                              onPressed: () => Navigator.of(context)
+                                  .push(
+                                    MaterialPageRoute(
+                                      builder: (_) => OrderEntryPage(
+                                        client: widget.client,
+                                        outletId: widget.outletId,
+                                        checkId: check.id,
+                                      ),
+                                    ),
+                                  )
+                                  .then((_) => _refresh()),
                               icon: const Icon(Icons.add),
                               label: const Text('Add Items'),
                             ),
                             FilledButton.tonalIcon(
-                              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => PaymentPage(
-                                  client: widget.client,
-                                  outletId: widget.outletId,
-                                  check: check,
-                                ),
-                              )).then((_) => _refresh()),
+                              onPressed: () => Navigator.of(context)
+                                  .push(
+                                    MaterialPageRoute(
+                                      builder: (_) => PaymentPage(
+                                        client: widget.client,
+                                        outletId: widget.outletId,
+                                        check: check,
+                                      ),
+                                    ),
+                                  )
+                                  .then((_) => _refresh()),
                               icon: const Icon(Icons.payments),
                               label: const Text('Payment'),
                             ),

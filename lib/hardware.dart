@@ -68,15 +68,13 @@ class UnimplementedHardware implements TerminalHardware {
     required double amount,
     required String method,
     String? reference,
-  }) async =>
-      const TerminalPaymentResult(status: 'UNAVAILABLE');
+  }) async => const TerminalPaymentResult(status: 'UNAVAILABLE');
 
   @override
   Future<bool> printReceipt({
     required String checkNumber,
     required List<String> lines,
-  }) async =>
-      false;
+  }) async => false;
 
   @override
   Future<bool> openDrawer() async => false;
@@ -123,10 +121,10 @@ class PlatformChannelHardware implements TerminalHardware {
     required List<String> lines,
   }) async {
     try {
-      final result = await _channel.invokeMethod<String>(
-        'printReceipt',
-        {'check_number': checkNumber, 'lines': lines},
-      );
+      final result = await _channel.invokeMethod<String>('printReceipt', {
+        'check_number': checkNumber,
+        'lines': lines,
+      });
       return result == 'OK';
     } on MissingPluginException {
       return false;

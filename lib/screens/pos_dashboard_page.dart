@@ -95,37 +95,53 @@ class _PosDashboardPageState extends State<PosDashboardPage> {
                       icon: Icons.add_circle,
                       label: 'New Check',
                       color: Colors.green,
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => TableManagementPage(
-                            client: widget.client, outletId: widget.outletId),
-                      )),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => TableManagementPage(
+                            client: widget.client,
+                            outletId: widget.outletId,
+                          ),
+                        ),
+                      ),
                     ),
                     _QuickAction(
                       icon: Icons.point_of_sale,
                       label: 'New Order',
                       color: Colors.orange,
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => OrderEntryPage(
-                            client: widget.client, outletId: widget.outletId),
-                      )),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => OrderEntryPage(
+                            client: widget.client,
+                            outletId: widget.outletId,
+                          ),
+                        ),
+                      ),
                     ),
                     _QuickAction(
                       icon: Icons.receipt_long,
                       label: 'Open Checks',
                       color: Colors.blue,
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => CheckListPage(
-                            client: widget.client, outletId: widget.outletId),
-                      )),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => CheckListPage(
+                            client: widget.client,
+                            outletId: widget.outletId,
+                          ),
+                        ),
+                      ),
                     ),
                     _QuickAction(
                       icon: Icons.bar_chart,
                       label: 'Reports',
                       color: Colors.purple,
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => PosReportsPage(
-                            client: widget.client, outletId: widget.outletId),
-                      )),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => PosReportsPage(
+                            client: widget.client,
+                            outletId: widget.outletId,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -137,7 +153,10 @@ class _PosDashboardPageState extends State<PosDashboardPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Today\'s Sales', style: theme.textTheme.titleMedium),
+                        Text(
+                          'Today\'s Sales',
+                          style: theme.textTheme.titleMedium,
+                        ),
                         const SizedBox(height: 12),
                         GridView.count(
                           crossAxisCount:
@@ -146,11 +165,19 @@ class _PosDashboardPageState extends State<PosDashboardPage> {
                           physics: const NeverScrollableScrollPhysics(),
                           childAspectRatio: 2.2,
                           children: [
-                            _Kpi('Total Sales', fmt.format(totalSales), Colors.green),
+                            _Kpi(
+                              'Total Sales',
+                              fmt.format(totalSales),
+                              Colors.green,
+                            ),
                             _Kpi('Cash', fmt.format(cashSales), Colors.blue),
                             _Kpi('Card', fmt.format(cardSales), Colors.purple),
                             _Kpi('Room', fmt.format(roomCharges), Colors.teal),
-                            _Kpi('Avg Check', fmt.format(avgCheck), Colors.orange),
+                            _Kpi(
+                              'Avg Check',
+                              fmt.format(avgCheck),
+                              Colors.orange,
+                            ),
                             _Kpi('Open Checks', '$openChecks', Colors.red),
                           ],
                         ),
@@ -170,10 +197,23 @@ class _PosDashboardPageState extends State<PosDashboardPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Tables', style: theme.textTheme.titleMedium),
+                              Text(
+                                'Tables',
+                                style: theme.textTheme.titleMedium,
+                              ),
                               const SizedBox(height: 8),
-                              _StatRow(Icons.event_available, 'Available', '$tablesAvailable', Colors.green),
-                              _StatRow(Icons.event_busy, 'Occupied', '$tablesOccupied', Colors.red),
+                              _StatRow(
+                                Icons.event_available,
+                                'Available',
+                                '$tablesAvailable',
+                                Colors.green,
+                              ),
+                              _StatRow(
+                                Icons.event_busy,
+                                'Occupied',
+                                '$tablesOccupied',
+                                Colors.red,
+                              ),
                             ],
                           ),
                         ),
@@ -188,7 +228,10 @@ class _PosDashboardPageState extends State<PosDashboardPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Server Status', style: theme.textTheme.titleMedium),
+                              Text(
+                                'Server Status',
+                                style: theme.textTheme.titleMedium,
+                              ),
                               const SizedBox(height: 8),
                               if (servers.isEmpty)
                                 const Text('No active servers.')
@@ -197,13 +240,20 @@ class _PosDashboardPageState extends State<PosDashboardPage> {
                                   final server = s as Map<String, dynamic>;
                                   return ListTile(
                                     leading: CircleAvatar(
-                                      child: Text((server['name'] as String?)?[0] ?? '?'),
+                                      child: Text(
+                                        (server['name'] as String?)?[0] ?? '?',
+                                      ),
                                     ),
-                                    title: Text(server['name'] as String? ?? 'Server'),
+                                    title: Text(
+                                      server['name'] as String? ?? 'Server',
+                                    ),
                                     subtitle: Text(
-                                        '${server['open_checks'] ?? 0} open checks • ${fmt.format((server['sales'] as num?)?.toDouble() ?? 0)}'),
+                                      '${server['open_checks'] ?? 0} open checks • ${fmt.format((server['sales'] as num?)?.toDouble() ?? 0)}',
+                                    ),
                                     trailing: Chip(
-                                      label: Text(server['status'] as String? ?? 'active'),
+                                      label: Text(
+                                        server['status'] as String? ?? 'active',
+                                      ),
                                     ),
                                   );
                                 }),
@@ -272,8 +322,14 @@ class _Kpi extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(label, style: Theme.of(context).textTheme.bodySmall),
-        Text(value,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color)),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
       ],
     );
   }

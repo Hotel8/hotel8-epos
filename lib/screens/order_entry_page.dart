@@ -102,8 +102,14 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
             onSubmitted: (v) => Navigator.pop(ctx, v),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx, ''), child: const Text('Skip')),
-            FilledButton(onPressed: () => Navigator.pop(ctx, 'add'), child: const Text('Add')),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, ''),
+              child: const Text('Skip'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, 'add'),
+              child: const Text('Add'),
+            ),
           ],
         ),
       );
@@ -116,15 +122,17 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
     }
 
     setState(() {
-      _cart.add(OrderItem(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        menuItemId: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: 1,
-        modifiers: selectedMods,
-        specialInstructions: specialInstr,
-      ));
+      _cart.add(
+        OrderItem(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          menuItemId: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: 1,
+          modifiers: selectedMods,
+          specialInstructions: specialInstr,
+        ),
+      );
     });
   }
 
@@ -161,20 +169,22 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
           // replay (epos/DESIGN.md §2 offline mode) and continue with the
           // remaining lines so the ticket is fully queued.
           if (_isNetworkError(e)) {
-            OfflineQueue.instance.noteFailure(OfflineOp(
-              type: OfflineOpType.orderAdd,
-              checkId: checkId,
-              idempotencyKey: OfflineQueue.instance.nextIdempotencyKey(),
-              payload: {
-                'menu_item_id': item.menuItemId,
-                'quantity': item.quantity,
-                'name': item.name,
-                'price': item.price,
-                'modifiers': item.modifiers,
-                'special_instructions': item.specialInstructions,
-              },
-              capturedAt: DateTime.now(),
-            ));
+            OfflineQueue.instance.noteFailure(
+              OfflineOp(
+                type: OfflineOpType.orderAdd,
+                checkId: checkId,
+                idempotencyKey: OfflineQueue.instance.nextIdempotencyKey(),
+                payload: {
+                  'menu_item_id': item.menuItemId,
+                  'quantity': item.quantity,
+                  'name': item.name,
+                  'price': item.price,
+                  'modifiers': item.modifiers,
+                  'special_instructions': item.specialInstructions,
+                },
+                capturedAt: DateTime.now(),
+              ),
+            );
           } else {
             rethrow;
           }
@@ -182,19 +192,26 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
       }
       if (mounted) {
         final q = OfflineQueue.instance;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(q.queuedCount > 0
-                ? 'Terminal offline — ${q.queuedCount} operation(s) queued '
-                    'and will sync when reconnected.'
-                : 'Order sent!')));
-        // Navigate to check detail or payment
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => CheckDetailPage(
-            client: widget.client,
-            outletId: widget.outletId,
-            checkId: checkId,
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              q.queuedCount > 0
+                  ? 'Terminal offline — ${q.queuedCount} operation(s) queued '
+                        'and will sync when reconnected.'
+                  : 'Order sent!',
+            ),
           ),
-        ));
+        );
+        // Navigate to check detail or payment
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => CheckDetailPage(
+              client: widget.client,
+              outletId: widget.outletId,
+              checkId: checkId,
+            ),
+          ),
+        );
       }
     } catch (e) {
       if (mounted) {
@@ -252,11 +269,11 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
                     padding: const EdgeInsets.all(12),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                      childAspectRatio: 1.4,
-                    ),
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
+                          childAspectRatio: 1.4,
+                        ),
                     itemCount: _filteredItems.length,
                     itemBuilder: (context, i) {
                       final item = _filteredItems[i];
@@ -281,9 +298,7 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
-                                        color: is86ed
-                                            ? Colors.grey
-                                            : null,
+                                        color: is86ed ? Colors.grey : null,
                                         decoration: is86ed
                                             ? TextDecoration.lineThrough
                                             : TextDecoration.none,
@@ -317,8 +332,10 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
                         width: double.infinity,
                         padding: const EdgeInsets.all(12),
                         color: theme.colorScheme.primaryContainer,
-                        child: Text('Current Order',
-                            style: theme.textTheme.titleMedium),
+                        child: Text(
+                          'Current Order',
+                          style: theme.textTheme.titleMedium,
+                        ),
                       ),
                       Expanded(
                         child: _cart.isEmpty
@@ -329,13 +346,21 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
                                 itemBuilder: (context, i) {
                                   final item = _cart[i];
                                   return Card(
-                                    margin: const EdgeInsets.symmetric(vertical: 4),
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 4,
+                                    ),
                                     child: ListTile(
-                                      title: Text('${item.quantity}x ${item.name}'),
+                                      title: Text(
+                                        '${item.quantity}x ${item.name}',
+                                      ),
                                       subtitle: item.modifiers.isNotEmpty
                                           ? Text(
-                                              item.modifiers.map((m) => m.name).join(', '),
-                                              style: const TextStyle(fontSize: 12),
+                                              item.modifiers
+                                                  .map((m) => m.name)
+                                                  .join(', '),
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              ),
                                             )
                                           : null,
                                       trailing: Row(
@@ -343,10 +368,14 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
                                         children: [
                                           Text(fmt.format(item.lineTotal)),
                                           IconButton(
-                                            icon: const Icon(Icons.remove_circle_outline,
-                                                color: Colors.red, size: 20),
-                                            onPressed: () =>
-                                                setState(() => _cart.removeAt(i)),
+                                            icon: const Icon(
+                                              Icons.remove_circle_outline,
+                                              color: Colors.red,
+                                              size: 20,
+                                            ),
+                                            onPressed: () => setState(
+                                              () => _cart.removeAt(i),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -359,21 +388,28 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: theme.colorScheme.surfaceContainerLow,
-                          border:
-                              Border(top: BorderSide(color: theme.dividerColor)),
+                          border: Border(
+                            top: BorderSide(color: theme.dividerColor),
+                          ),
                         ),
                         child: SafeArea(
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Total', style: theme.textTheme.titleLarge),
-                                  Text(fmt.format(_cartTotal),
-                                      style: theme.textTheme.titleLarge
-                                          ?.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: theme.colorScheme.primary)),
+                                  Text(
+                                    'Total',
+                                    style: theme.textTheme.titleLarge,
+                                  ),
+                                  Text(
+                                    fmt.format(_cartTotal),
+                                    style: theme.textTheme.titleLarge?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: theme.colorScheme.primary,
+                                    ),
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 8),
@@ -388,11 +424,15 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
                                           width: 18,
                                           height: 18,
                                           child: CircularProgressIndicator(
-                                              strokeWidth: 2))
+                                            strokeWidth: 2,
+                                          ),
+                                        )
                                       : const Icon(Icons.send),
-                                  label: Text(widget.checkId != null
-                                      ? 'Add to Check'
-                                      : 'Send Order'),
+                                  label: Text(
+                                    widget.checkId != null
+                                        ? 'Add to Check'
+                                        : 'Send Order',
+                                  ),
                                 ),
                               ),
                             ],
@@ -445,7 +485,10 @@ class _ModifierDialogState extends State<_ModifierDialog> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(entry.key, style: Theme.of(context).textTheme.titleSmall),
+                  Text(
+                    entry.key,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
                   ...entry.value.map((m) {
                     return CheckboxListTile(
                       value: _selected.contains(m),
@@ -479,15 +522,17 @@ class _ModifierDialogState extends State<_ModifierDialog> {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
         FilledButton(
-          onPressed: () => Navigator.pop(
-            context,
-            (
-              mods: _selected.toList(),
-              instr: _instrCtrl.text.trim().isEmpty ? null : _instrCtrl.text.trim(),
-            ),
-          ),
+          onPressed: () => Navigator.pop(context, (
+            mods: _selected.toList(),
+            instr: _instrCtrl.text.trim().isEmpty
+                ? null
+                : _instrCtrl.text.trim(),
+          )),
           child: const Text('Add to Order'),
         ),
       ],

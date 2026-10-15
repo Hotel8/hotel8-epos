@@ -27,8 +27,8 @@ import 'models.dart';
 
 class BffClient {
   BffClient({String? baseUrl, http.Client? httpClient})
-      : _baseUrl = baseUrl ?? _resolveBaseUrl(),
-        _httpClient = httpClient ?? http.Client();
+    : _baseUrl = baseUrl ?? _resolveBaseUrl(),
+      _httpClient = httpClient ?? http.Client();
 
   final String _baseUrl;
   final http.Client _httpClient;
@@ -38,10 +38,7 @@ class BffClient {
   /// For local development fall back to the `H8POS_BFF_BASE_URL` env var or
   /// `http://localhost:8080`.
   static String _resolveBaseUrl() {
-    const env = String.fromEnvironment(
-      'H8POS_BFF_BASE_URL',
-      defaultValue: '',
-    );
+    const env = String.fromEnvironment('H8POS_BFF_BASE_URL', defaultValue: '');
     if (env.isNotEmpty) return env;
 
     if (kIsWeb) {
@@ -53,8 +50,10 @@ class BffClient {
 
   String _path(String p) => '$_baseUrl$p';
 
-  Future<Map<String, dynamic>> _getJson(String path,
-      [Map<String, String>? query]) async {
+  Future<Map<String, dynamic>> _getJson(
+    String path, [
+    Map<String, String>? query,
+  ]) async {
     final uri = Uri.parse(_path(path));
     final resolved = query == null ? uri : uri.replace(queryParameters: query);
     final resp = await _httpClient.get(resolved, headers: _headers());
@@ -86,15 +85,17 @@ class BffClient {
   }
 
   Future<Map<String, dynamic>> _deleteJson(String path) async {
-    final resp =
-        await _httpClient.delete(Uri.parse(_path(path)), headers: _headers());
+    final resp = await _httpClient.delete(
+      Uri.parse(_path(path)),
+      headers: _headers(),
+    );
     return _handle(resp);
   }
 
   Map<String, String> _headers() => {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      };
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
 
   /// `POST /proxy/hotel8-pos/v1/offline-sync` — replay captured offline ops
   /// after reconnect (epos/DESIGN.md §2 offline mode). The service replays
@@ -142,9 +143,7 @@ class BffClient {
   // ═════════════════════════════════════════════════════════════════════════
 
   /// `GET /proxy/hotel8-pos/v1/outlets/{outletId}/dashboard`
-  Future<Map<String, dynamic>> getDashboard({
-    required String outletId,
-  }) async {
+  Future<Map<String, dynamic>> getDashboard({required String outletId}) async {
     return _getJson('/proxy/hotel8-pos/v1/outlets/$outletId/dashboard');
   }
 
@@ -191,11 +190,7 @@ class BffClient {
   }) async {
     final json = await _postJson(
       '/proxy/hotel8-pos/v1/outlets/$outletId/checks',
-      {
-        'table_id': tableId,
-        'server_id': serverId,
-        'guests': guests,
-      },
+      {'table_id': tableId, 'server_id': serverId, 'guests': guests},
     );
     return Check.fromJson(json['check'] as Map<String, dynamic>? ?? json);
   }
@@ -261,18 +256,23 @@ class BffClient {
         'name': name,
         'price': price,
         'quantity': quantity,
-        'modifiers': modifiers.map((m) => {
-              'id': m.id,
-              'name': m.name,
-              'price_adjustment': m.priceAdjustment,
-              'modifier_group': m.modifierGroup,
-            }).toList(),
+        'modifiers': modifiers
+            .map(
+              (m) => {
+                'id': m.id,
+                'name': m.name,
+                'price_adjustment': m.priceAdjustment,
+                'modifier_group': m.modifierGroup,
+              },
+            )
+            .toList(),
         if (specialInstructions != null)
           'special_instructions': specialInstructions,
       },
     );
     return OrderItem.fromJson(
-        json['order_item'] as Map<String, dynamic>? ?? json);
+      json['order_item'] as Map<String, dynamic>? ?? json,
+    );
   }
 
   /// `DELETE /proxy/hotel8-pos/v1/.../items/{itemId}`
@@ -311,8 +311,7 @@ class BffClient {
         if (tip != null) 'tip': tip,
       },
     );
-    return Payment.fromJson(
-        json['payment'] as Map<String, dynamic>? ?? json);
+    return Payment.fromJson(json['payment'] as Map<String, dynamic>? ?? json);
   }
 
   /// `POST /proxy/hotel8-pos/v1/outlets/{outletId}/checks/{checkId}/close`
@@ -374,10 +373,7 @@ class BffClient {
   }) async {
     final json = await _postJson(
       '/proxy/hotel8-pos/v1/outlets/$outletId/tables/$tableId/seat',
-      {
-        'guests': guests,
-        'server_id': serverId,
-      },
+      {'guests': guests, 'server_id': serverId},
     );
     return Table.fromJson(json['table'] as Map<String, dynamic>? ?? json);
   }
@@ -390,8 +386,9 @@ class BffClient {
   Future<List<MenuCategory>> getMenuCategories({
     required String outletId,
   }) async {
-    final json =
-        await _getJson('/proxy/hotel8-pos/v1/outlets/$outletId/categories');
+    final json = await _getJson(
+      '/proxy/hotel8-pos/v1/outlets/$outletId/categories',
+    );
     final list = json['categories'] as List<dynamic>? ?? [];
     return list
         .map((e) => MenuCategory.fromJson(e as Map<String, dynamic>))
@@ -405,10 +402,14 @@ class BffClient {
   }) async {
     final query = <String, String>{};
     if (categoryId != null) query['category_id'] = categoryId;
-    final json =
-        await _getJson('/proxy/hotel8-pos/v1/outlets/$outletId/items', query);
+    final json = await _getJson(
+      '/proxy/hotel8-pos/v1/outlets/$outletId/items',
+      query,
+    );
     final list = json['items'] as List<dynamic>? ?? [];
-    return list.map((e) => MenuItem.fromJson(e as Map<String, dynamic>)).toList();
+    return list
+        .map((e) => MenuItem.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   /// `PUT /proxy/hotel8-pos/v1/.../items/{itemId}/86`

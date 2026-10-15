@@ -139,7 +139,11 @@ class _POSShellState extends State<POSShell> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.restaurant, size: 32, color: theme.colorScheme.primary),
+                        Icon(
+                          Icons.restaurant,
+                          size: 32,
+                          color: theme.colorScheme.primary,
+                        ),
                         const SizedBox(height: 2),
                         Text('POS', style: theme.textTheme.titleSmall),
                       ],
@@ -163,11 +167,13 @@ class _POSShellState extends State<POSShell> {
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             child: Column(
                               children: [
-                                Icon(item.icon,
-                                    size: 28,
-                                    color: selected
-                                        ? theme.colorScheme.primary
-                                        : theme.colorScheme.onSurfaceVariant),
+                                Icon(
+                                  item.icon,
+                                  size: 28,
+                                  color: selected
+                                      ? theme.colorScheme.primary
+                                      : theme.colorScheme.onSurfaceVariant,
+                                ),
                                 const SizedBox(height: 4),
                                 Text(
                                   item.label,

@@ -51,15 +51,15 @@ class OfflineOp {
   final DateTime capturedAt;
 
   Map<String, dynamic> toSyncBody() => {
-        'type': switch (type) {
-          OfflineOpType.orderAdd => 'order_add',
-          OfflineOpType.paymentPost => 'payment_post',
-        },
-        'check_id': checkId,
-        'idempotency_key': idempotencyKey,
-        'payload': payload,
-        'captured_at': capturedAt.toIso8601String(),
-      };
+    'type': switch (type) {
+      OfflineOpType.orderAdd => 'order_add',
+      OfflineOpType.paymentPost => 'payment_post',
+    },
+    'check_id': checkId,
+    'idempotency_key': idempotencyKey,
+    'payload': payload,
+    'captured_at': capturedAt.toIso8601String(),
+  };
 }
 
 /// Terminal connectivity + the captured-op queue. Wired into `OrderEntryPage`

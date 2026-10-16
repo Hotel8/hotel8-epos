@@ -145,7 +145,8 @@ sequenceDiagram
         PP->>C: processCardPayment(...)
         C->>BFF: POST /proxy/payments/v1/payments
         BFF->>PAY: create charge (M2M)
-        PAY-->>BFF-->>C: charge result
+        PAY-->>BFF: charge result
+        BFF-->>C: charge result
     end
     alt room charge
         PP->>C: postRoomCharge(roomNumber, amount)

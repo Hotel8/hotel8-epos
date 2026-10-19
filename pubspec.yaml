@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 name: epos
-description: Sentin8 Hotel8:ePOS App — restaurant staff POS application.
+description: Sentin8 Hotel8:ePOS App - restaurant staff POS application.
 publish_to: "none"
 version: 0.1.0
 

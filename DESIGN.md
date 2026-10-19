@@ -1,4 +1,4 @@
-# Hotel8:ePOS — Detailed Design Document
+# Hotel8:ePOS - Detailed Design Document
 
 ## 1. Scope & Context
 
@@ -89,23 +89,23 @@ graph TD
 
 Component responsibilities:
 
-- `main.dart` — entry point.
-- `app.dart` — `POSStaffApp` (Material theme, seed color) + `POSShell`
+- `main.dart` - entry point.
+- `app.dart` - `POSStaffApp` (Material theme, seed color) + `POSShell`
   (sidebar `NavigationBar`-style rail over `IndexedStack`, the outlet context,
   the single `BffClient`).
-- `screens/*.dart` — screen widgets per terminal function; navigation pushes
+- `screens/*.dart` - screen widgets per terminal function; navigation pushes
   carry ids (check id, table id) rather than copying state.
-- `models.dart` — immutable contract mappers for the POS domain.
-- `bff_client.dart` — typed endpoint wrappers; error normalization.
-- `offline_queue.dart` — offline order-capture + deferred settlement:
+- `models.dart` - immutable contract mappers for the POS domain.
+- `bff_client.dart` - typed endpoint wrappers; error normalization.
+- `offline_queue.dart` - offline order-capture + deferred settlement:
   network-class failures queue the op (client-side idempotency key) and the
   queue replays via `POST /v1/offline-sync` on reconnect (§6 offline
   terminal row); any successful call re-marks the terminal online.
-- `hardware.dart` — the terminal-hardware surface (`h8pos_hardware`
+- `hardware.dart` - the terminal-hardware surface (`h8pos_hardware`
   platform channel: `payTerminal`, `printReceipt`, `openDrawer`); the web
   build reports hardware unavailable instead of failing silently.
 
-### Request lifecycle — order entry → payment
+### Request lifecycle - order entry → payment
 
 ```mermaid
 sequenceDiagram
@@ -129,7 +129,7 @@ sequenceDiagram
     end
 ```
 
-### Request lifecycle — payment close
+### Request lifecycle - payment close
 
 ```mermaid
 sequenceDiagram
@@ -211,7 +211,7 @@ in `bff_client.dart`:
 ### Event flow
 
 The app emits no events. The POS service owns the event chains its mutations
-trigger — see `services/pos/DESIGN.md` §4 (outbox → Bus → consumers).
+trigger - see `services/pos/DESIGN.md` §4 (outbox → Bus → consumers).
 
 ```mermaid
 sequenceDiagram
@@ -244,7 +244,7 @@ sequenceDiagram
   journaling; the client contributes the acting staff session only.
 - **TLS posture:** terminal browsers run on Sentin8:TLS-terminated origins;
   dev HTTP fallback is native-only localhost.
-- **Upgrade drain:** stateless terminal build — reload picks up new assets.
+- **Upgrade drain:** stateless terminal build - reload picks up new assets.
 
 ## 6. Failure Modes & Recovery
 
@@ -281,7 +281,7 @@ graph LR
   switching, per-tab scroll state); heavy payloads are reports (bounded by
   date range via query).
 - One `http.Client` for app lifetime; closed by the shell.
-- Menu data is refetched per outlet entry — menu edits (86) must reflect
+- Menu data is refetched per outlet entry - menu edits (86) must reflect
   immediately, so no menu cache.
 
 ## 8. Invariants, Insecure-Defaults Rejected, Unsafe Rationale
@@ -312,21 +312,21 @@ graph TD
     WT --> E2E[Hotel8 e2e-ts UI suites drive the terminal\norder → pay through real BFF]
 ```
 
-- **Unit** — contract mappers and any future client-side projection helpers.
-- **Widget** — shell renders navigation and dashboard; screens mount with
+- **Unit** - contract mappers and any future client-side projection helpers.
+- **Widget** - shell renders navigation and dashboard; screens mount with
   injected clients.
-- **E2E** — the hotel8 `e2e-ts` UI suites cover the terminal user journey
+- **E2E** - the hotel8 `e2e-ts` UI suites cover the terminal user journey
   through the browser + BFF exactly as a human would; deliberately NOT
   tested here: POS domain logic, RLS, event chains (owned by
   `services/pos` tests).
 
 ## 10. Open Questions
 
-- Runtime-context bootstrap (outlet id, staff sign-in gate) — the terminal
+- Runtime-context bootstrap (outlet id, staff sign-in gate) - the terminal
   binds the property's first outlet; multi-outlet selection arrives with an
   outlet registry page (assignment is a property-level configuration).
 - Hardware (payment terminal, printer group routing, drawer) integration via
-  platform channels — `lib/hardware.dart` declares the channel contract
+  platform channels - `lib/hardware.dart` declares the channel contract
   (`h8pos_hardware`: `payTerminal`, `printReceipt`, `openDrawer`) and the
   web build reports hardware unavailable; which platform build ships first
   (kiosk-style Android/embedding targets vs web-only terminals) is the open

@@ -1,4 +1,4 @@
-# Hotel8:ePOS — Business Requirements & Functionality
+# Hotel8:ePOS - Business Requirements & Functionality
 
 > Audience: product owners, business analysts, and anyone evaluating what
 > Hotel8:ePOS **does for the business**. For architecture read `README.md`;
@@ -26,11 +26,11 @@
 | Table management: floor plan, status changes, seat | ✅ |
 | Menu administration: browse, 86-toggle availability | ✅ |
 | Reporting: shifts, typed reports, daily close | ✅ |
-| Full menu item/price/modifier-group CRUD with bulk updates | ❌ service-side/admin surface — not in-app yet |
+| Full menu item/price/modifier-group CRUD with bulk updates | ❌ service-side/admin surface - not in-app yet |
 | Offline order/payment queue | ✅ capture offline (order lines + settlements queue with client idempotency keys) and replay via `POST /v1/offline-sync` on reconnect |
 | Kitchen display/printer routing control | ✅ configuration surfaced; thermal printing rides the terminal hardware channel on embedding builds |
-| Guest-facing ordering | ❌ delegated — Hotel8:eGuest |
-| Hotel reservations/front desk | ❌ delegated — Hotel8:ePMS |
+| Guest-facing ordering | ❌ delegated - Hotel8:eGuest |
+| Hotel reservations/front desk | ❌ delegated - Hotel8:ePMS |
 
 ## 3. Business Capabilities
 
@@ -80,14 +80,14 @@ PMS/loyalty integrations:
    or Payments directly.
 2. Money figures displayed are computed by the POS service; the terminal
    never treats local arithmetic as authoritative.
-3. Voids, comps, and discounts are gated by role scopes server-side — the UI
+3. Voids, comps, and discounts are gated by role scopes server-side - the UI
    cannot bypass a manager approval.
 4. Card data never enters the terminal; card settlement is a Bill8 charge
    outcome.
 5. A check closes only against a fully covered balance.
 6. 86-toggles take effect on every terminal immediately (central menu
    service, no terminal-local menu override).
-7. Room charges always post to the folio through PMS — the terminal cannot
+7. Room charges always post to the folio through PMS - the terminal cannot
    write to a folio table.
 
 ## 6. Target-User Roles & Use Cases
@@ -98,17 +98,17 @@ PMS/loyalty integrations:
 | Bartender | Runs bar tabs (open checks without table), quick order entry. |
 | Shift manager | Handles voids/comps/discounts within approval limits, reviews shift reports. |
 | General manager | 86's items, runs daily close, monitors revenue and payment mix. |
-| Administrator | (Config surface) revenue centers, tax groups, printer groups — currently on the service/admin side. |
+| Administrator | (Config surface) revenue centers, tax groups, printer groups - currently on the service/admin side. |
 
 ## 7. KPIs / Success Criteria
 
-- **Check throughput** — time from order entry to payment close per center.
-- **Payment mix integrity** — zero discrepancies between POS payment rows and
+- **Check throughput** - time from order entry to payment close per center.
+- **Payment mix integrity** - zero discrepancies between POS payment rows and
   Bill8 charges / PMS folio postings at daily close.
 - **Void/comp rates** within management tolerance, all fully audit-attributed.
-- **Menu freshness** — 86 or price changes visible on all terminals within
+- **Menu freshness** - 86 or price changes visible on all terminals within
   seconds.
-- **Uptime at peak** — the terminal is usable through every dinner service;
+- **Uptime at peak** - the terminal is usable through every dinner service;
   failures degrade to a visible error, never a silently lost order.
 
 ## 8. Dependencies & Reliance on Other Services
@@ -125,7 +125,7 @@ PMS/loyalty integrations:
 ## 9. Acceptance Criteria
 
 1. A server can open a check, add items with modifiers, and close it with a
-   mixed payment — end to end through the terminal.
+   mixed payment - end to end through the terminal.
 2. A void item requires a reason and is visible in check detail afterward.
 3. A room charge appears in the guest's folio in PMS immediately after
    payment.

@@ -8,7 +8,7 @@
       "listing": {
         "app_name": "Hotel8:ePOS",
         "app_slug": "hotel8-epos",
-        "description": "Point of Sale app — restaurant, bar, and retail orders, table management, payments, and end-of-day reconciliation.",
+        "description": "Point of Sale app - restaurant, bar, and retail orders, table management, payments, and end-of-day reconciliation.",
         "backend_url": "",
         "supports_dcr": true,
         "visibility": "public",

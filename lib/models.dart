@@ -8,7 +8,7 @@
 /// Simple Dart classes mirroring the H8POS restaurant contract shapes (see
 /// `epos/DESIGN.md` §3) and the BFF
 /// proxy surface for H8POS. H8POS is the restaurant point-of-sale staff app
-/// — checks, orders, payments, tables, menus, and reports.
+/// - checks, orders, payments, tables, menus, and reports.
 
 // ═══════════════════════════════════════════════════════════════════════════
 // Outlet
@@ -77,7 +77,7 @@ class MenuItem {
   final double price;
   final String currencyCode;
   final bool active;
-  final bool eightySixed; // "86'd" — temporarily unavailable
+  final bool eightySixed; // "86'd"  -  temporarily unavailable
   final List<Modifier> modifiers;
 
   const MenuItem({

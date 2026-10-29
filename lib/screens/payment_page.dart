@@ -108,7 +108,7 @@ class _PaymentPageState extends State<PaymentPage> {
         });
       }
     } catch (e) {
-      // Network-class failure while disconnected — capture the deferred
+      // Network-class failure while disconnected - capture the deferred
       // settlement for replay (epos/DESIGN.md §2 offline mode).
       if (e is BffException && (e.statusCode == 0 || e.statusCode >= 500)) {
         OfflineQueue.instance.noteFailure(
@@ -128,7 +128,7 @@ class _PaymentPageState extends State<PaymentPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                'Offline — payment queued (${OfflineQueue.instance.queuedCount} in queue).',
+                'Offline - payment queued (${OfflineQueue.instance.queuedCount} in queue).',
               ),
             ),
           );

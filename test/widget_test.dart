@@ -20,7 +20,7 @@ void main() {
     await tester.pumpWidget(const POSStaffApp());
     await tester.pump(const Duration(milliseconds: 100));
 
-    // Labels may repeat (nav + page heading) — assert presence.
+    // Labels may repeat (nav + page heading) - assert presence.
     expect(find.text('Dashboard'), findsWidgets);
     expect(find.text('Checks'), findsWidgets);
     expect(find.text('Order'), findsWidgets);

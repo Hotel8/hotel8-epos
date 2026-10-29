@@ -143,7 +143,7 @@ class _TableManagementPageState extends State<TableManagementPage> {
       builder: (ctx) {
         final ctrl = TextEditingController(text: '2');
         return AlertDialog(
-          title: Text('Seat — Table ${table.tableNumber}'),
+          title: Text('Seat - Table ${table.tableNumber}'),
           content: TextField(
             controller: ctrl,
             keyboardType: TextInputType.number,
@@ -189,7 +189,7 @@ class _TableManagementPageState extends State<TableManagementPage> {
       builder: (ctx) {
         final ctrl = TextEditingController();
         return AlertDialog(
-          title: Text('Assign Server — Table ${table.tableNumber}'),
+          title: Text('Assign Server - Table ${table.tableNumber}'),
           content: TextField(
             controller: ctrl,
             decoration: const InputDecoration(

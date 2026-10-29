@@ -21,7 +21,7 @@ class POSStaffApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'POS — Restaurant POS',
+      title: 'POS - Restaurant POS',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
@@ -56,11 +56,11 @@ class _POSShellState extends State<POSShell> {
 
   Future<void> _bootstrap() async {
     try {
-      // Same-origin bootstrap — TLS injects the X-Sentin8-* host headers
+      // Same-origin bootstrap - TLS injects the X-Sentin8-* host headers
       // the runtime context resolves from (epos/DESIGN.md §2).
       final ctx = await fetchRuntimeContext(appBaseUrl: '');
       final client = BffClient(baseUrl: ctx.bffBaseUrl);
-      // First outlet of the property's POS deployment — the terminal's
+      // First outlet of the property's POS deployment - the terminal's
       // outlet assignment is a property-level configuration; multi-outlet
       // selection arrives with the outlet registry page.
       String? outletId;
@@ -68,7 +68,7 @@ class _POSShellState extends State<POSShell> {
         final outlets = await client.getOutlets();
         if (outlets.isNotEmpty) outletId = outlets.first.id;
       } on BffException {
-        // Terminal still renders — screens show their own empty states.
+        // Terminal still renders - screens show their own empty states.
       }
       setState(() {
         _runtimeContext = ctx;

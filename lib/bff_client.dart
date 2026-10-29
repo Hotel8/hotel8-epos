@@ -8,15 +8,15 @@
 /// Thin HTTP client that calls the BFF proxy endpoints (see
 /// `epos/DESIGN.md` §4) which in turn
 /// delegate to H8POS / Payments. All requests go through the BFF server-side
-/// token guardian — H8POS never talks to a backend directly.
+/// token guardian - H8POS never talks to a backend directly.
 ///
 /// Endpoint namespaces used:
-///   /proxy/hotel8-pos/v1/outlets/{id}/checks        — checks (+void/transfer/split)
-///   /proxy/hotel8-pos/v1/outlets/{id}/checks/{id}/orders — order items
+///   /proxy/hotel8-pos/v1/outlets/{id}/checks        - checks (+void/transfer/split)
+///   /proxy/hotel8-pos/v1/outlets/{id}/checks/{id}/orders - order items
 ///   /proxy/hotel8-pos/v1/outlets/{id}/checks/{id}/payments / payments-process
-///   /proxy/hotel8-pos/v1/outlets/{id}/tables        — tables (+status/seat)
-///   /proxy/hotel8-pos/v1/outlets/{id}/menu-items    — items, categories, availability
-///   /proxy/hotel8-pos/v1/outlets/{id}/reports/{kind} — sales/items/labor/end-of-day
+///   /proxy/hotel8-pos/v1/outlets/{id}/tables        - tables (+status/seat)
+///   /proxy/hotel8-pos/v1/outlets/{id}/menu-items    - items, categories, availability
+///   /proxy/hotel8-pos/v1/outlets/{id}/reports/{kind} - sales/items/labor/end-of-day
 
 import 'dart:convert';
 
@@ -97,7 +97,7 @@ class BffClient {
     'Accept': 'application/json',
   };
 
-  /// `POST /proxy/hotel8-pos/v1/offline-sync` — replay captured offline ops
+  /// `POST /proxy/hotel8-pos/v1/offline-sync` - replay captured offline ops
   /// after reconnect (epos/DESIGN.md §2 offline mode). The service replays
   /// each op server-side under a single transaction set and reports per-op
   /// status (`SYNCED`/`SKIPPED`).
@@ -105,7 +105,7 @@ class BffClient {
     return _postJson('/proxy/hotel8-pos/v1/offline-sync', body);
   }
 
-  /// `GET /proxy/hotel8-pos/v1/offline-status` — server view of terminal
+  /// `GET /proxy/hotel8-pos/v1/offline-status` - server view of terminal
   /// sync state (advisory banner on the dashboard).
   Future<Map<String, dynamic>> offlineStatus() async {
     return _getJson('/proxy/hotel8-pos/v1/offline-status');

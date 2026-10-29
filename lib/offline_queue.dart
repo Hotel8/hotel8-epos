@@ -3,11 +3,11 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Hotel8:EPOS
 // SPDX-License-Identifier: Apache-2.0
 
-// ePOS offline queue — order capture and payment pre-authorization with
+// ePOS offline queue - order capture and payment pre-authorization with
 // deferred settlement when the terminal is disconnected (epos/DESIGN.md
 // §2 "Offline mode" + §10).
 //
-// The queue holds idempotent operation records in memory (session-scoped —
+// The queue holds idempotent operation records in memory (session-scoped  - 
 // the terminal is a single-device surface; nothing persists across app
 // restarts). On reconnect the app replays them via the POS offline-sync
 // endpoint (`POST /proxy/hotel8-pos/v1/offline-sync`) which replays each
@@ -41,7 +41,7 @@ class OfflineOp {
   final OfflineOpType type;
   final String checkId;
 
-  /// Client-side dedupe key — the offline ticket number plus sequence,
+  /// Client-side dedupe key - the offline ticket number plus sequence,
   /// stable across replay attempts (POS offline-sync contract).
   final String idempotencyKey;
 
@@ -63,7 +63,7 @@ class OfflineOp {
 }
 
 /// Terminal connectivity + the captured-op queue. Wired into `OrderEntryPage`
-/// and `PaymentPage` — a failed call while `offlineMode` is detected queues
+/// and `PaymentPage` - a failed call while `offlineMode` is detected queues
 /// the op and surfaces the queue counter.
 class OfflineQueue {
   OfflineQueue._();
@@ -74,7 +74,7 @@ class OfflineQueue {
   final _ticketSeq = <int>[];
   int _sequence = 0;
 
-  /// Terminal offline state — set when a call fails with a network-class
+  /// Terminal offline state - set when a call fails with a network-class
   /// error and cleared on the next successful call (any API response proves
   /// connectivity).
   bool offlineMode = false;
@@ -86,7 +86,7 @@ class OfflineQueue {
 
   DateTime? get lastSyncAt => _lastSyncAt;
 
-  /// Connectivity as the terminal sees it — conservative: online only after
+  /// Connectivity as the terminal sees it - conservative: online only after
   /// a successful call and no outage detection since.
   bool get isOnline {
     if (offlineMode) return false;
@@ -121,7 +121,7 @@ class OfflineQueue {
       'operations': [for (final op in _ops) op.toSyncBody()],
     };
     final json = await client.syncOffline(body);
-    // Drain — the offline-sync endpoint is the replay surface; ops that came
+    // Drain - the offline-sync endpoint is the replay surface; ops that came
     // back SKIPPED failed idempotency precheck (already applied before the
     // outage) and are safe to drop (exactly-once via idempotency_key).
     final results = <Map<String, dynamic>>[];

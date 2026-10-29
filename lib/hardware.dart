@@ -3,7 +3,7 @@
 // SPDX-FileCopyrightText: Copyright Contributors to the Hotel8:EPOS
 // SPDX-License-Identifier: Apache-2.0
 
-// ePOS terminal hardware abstraction — payment terminal, printer-group
+// ePOS terminal hardware abstraction - payment terminal, printer-group
 // routing, and cash drawer behind a platform-channel interface
 // (epos/DESIGN.md §2 "Hardware").
 //
@@ -32,7 +32,7 @@ class TerminalPaymentResult {
 }
 
 /// Hardware surface the terminal pages call; never throws for absence of
-/// hardware — queries return a clear unavailable state.
+/// hardware - queries return a clear unavailable state.
 abstract class TerminalHardware {
   /// Authorize a payment on the integrated terminal.
   Future<TerminalPaymentResult> payTerminal({
@@ -55,7 +55,7 @@ abstract class TerminalHardware {
 }
 
 /// No-op implementation for builds without platform channels (web). Every
-/// call reports unavailable — callers render "hardware pending" instead of
+/// call reports unavailable - callers render "hardware pending" instead of
 /// attempting a payment flow that cannot complete.
 class UnimplementedHardware implements TerminalHardware {
   const UnimplementedHardware();

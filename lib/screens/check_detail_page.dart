@@ -182,7 +182,7 @@ class _CheckDetailPageState extends State<CheckDetailPage> {
   }
 
   Future<void> _transfer() async {
-    // Simple transfer — in production this would show a server picker.
+    // Simple transfer - in production this would show a server picker.
     final server = await showDialog<String>(
       context: context,
       builder: (ctx) {

@@ -19,18 +19,18 @@
 
 | Capability | Provided by ePOS |
 |---|---|
-| Outlet dashboard (daily sales at a glance) | ✅ |
-| Check lifecycle: open, add items, void items, transfer, split | ✅ |
-| Order entry: categories, items, modifiers, special instructions | ✅ |
-| Payment: cash, card (Bill8 capture), room charge, close | ✅ |
-| Table management: floor plan, status changes, seat | ✅ |
-| Menu administration: browse, 86-toggle availability | ✅ |
-| Reporting: shifts, typed reports, daily close | ✅ |
-| Full menu item/price/modifier-group CRUD with bulk updates | ❌ service-side/admin surface - not in-app yet |
-| Offline order/payment queue | ✅ capture offline (order lines + settlements queue with client idempotency keys) and replay via `POST /v1/offline-sync` on reconnect |
-| Kitchen display/printer routing control | ✅ configuration surfaced; thermal printing rides the terminal hardware channel on embedding builds |
-| Guest-facing ordering | ❌ delegated - Hotel8:eGuest |
-| Hotel reservations/front desk | ❌ delegated - Hotel8:ePMS |
+| Outlet dashboard (daily sales at a glance) ||
+| Check lifecycle: open, add items, void items, transfer, split ||
+| Order entry: categories, items, modifiers, special instructions ||
+| Payment: cash, card (Bill8 capture), room charge, close ||
+| Table management: floor plan, status changes, seat ||
+| Menu administration: browse, 86-toggle availability ||
+| Reporting: shifts, typed reports, daily close ||
+| Full menu item/price/modifier-group CRUD with bulk updates |service-side/admin surface - not in-app yet |
+| Offline order/payment queue |capture offline (order lines + settlements queue with client idempotency keys) and replay via `POST /v1/offline-sync` on reconnect |
+| Kitchen display/printer routing control |configuration surfaced; thermal printing rides the terminal hardware channel on embedding builds |
+| Guest-facing ordering |delegated - Hotel8:eGuest |
+| Hotel reservations/front desk |delegated - Hotel8:ePMS |
 
 ## 3. Business Capabilities
 

@@ -189,7 +189,7 @@ class _PosReportsPageState extends State<PosReportsPage> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  '${DateFormat.yMMMd().format(_report!.periodStart)} – ${DateFormat.yMMMd().format(_report!.periodEnd)}',
+                                  '${DateFormat.yMMMd().format(_report!.periodStart)}  -  ${DateFormat.yMMMd().format(_report!.periodEnd)}',
                                   style: theme.textTheme.bodyMedium,
                                 ),
                               ],

@@ -88,7 +88,7 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
       selectedMods = result.mods;
       specialInstr = result.instr;
     } else {
-      // Quick add — check for special instructions
+      // Quick add - check for special instructions
       final instr = await showDialog<String>(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -165,7 +165,7 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
           );
           OfflineQueue.instance.noteSuccess();
         } on BffException catch (e) {
-          // Network-class failure while disconnected — capture the line for
+          // Network-class failure while disconnected - capture the line for
           // replay (epos/DESIGN.md §2 offline mode) and continue with the
           // remaining lines so the ticket is fully queued.
           if (_isNetworkError(e)) {
@@ -196,7 +196,7 @@ class _OrderEntryPageState extends State<OrderEntryPage> {
           SnackBar(
             content: Text(
               q.queuedCount > 0
-                  ? 'Terminal offline — ${q.queuedCount} operation(s) queued '
+                  ? 'Terminal offline - ${q.queuedCount} operation(s) queued '
                         'and will sync when reconnected.'
                   : 'Order sent!',
             ),
